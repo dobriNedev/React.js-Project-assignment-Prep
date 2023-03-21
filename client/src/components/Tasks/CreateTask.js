@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useForm from "../../hooks/useForm";
-import { useContext } from "react";
-import { authContext } from "../../contexts/autContext";
+
 const CreateTask = ({
     onTaskCreateSubmit
 }) => {
@@ -21,7 +20,6 @@ const CreateTask = ({
     //     e.preventDefault();
     //     onTaskCreateSubmit(values);
     // };
-    const { token } = useContext(authContext);
 
     const {values, onChangeHandler, onSubmit} = useForm({
             title: '',
