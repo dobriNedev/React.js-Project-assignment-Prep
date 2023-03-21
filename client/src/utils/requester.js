@@ -1,5 +1,10 @@
-const request = async (method, url, data, token) => {
+const request = async (method, url, data) => {
     const options = {};
+    let token;
+    
+    if (typeof(data) === 'string') {
+        token = data;
+    }
 
     if (method !== 'GET') {
         options.method = method;
