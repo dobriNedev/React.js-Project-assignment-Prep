@@ -1,0 +1,21 @@
+.not-found {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 80vh;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCc9otQgqaWMux1v1KrUBBT4wppfQ9p4apYA&usqp=CAU');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .not-found p {
+    padding: 15vh;
+    font-size: larger;
+  }
+  
+  .not-found p a {
+    text-decoration: none;
+    color: #3a9fc3;
+  }
