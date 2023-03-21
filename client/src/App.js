@@ -85,13 +85,29 @@ function App() {
     };
 
     const onTaskCreateSubmit = async(data) => {
-        const newTask = await taskService.create(data);
+        try {
+            const newTask = await taskService.create(data);
 
-        setTasks(state => [...state, newTask]);
+            setTasks(state => [...state, newTask]);
 
-        navigate('/tasks');
+            navigate('/tasks');
+        } catch (error) {
+            console.log('Error onTaskCreateSubmit:' + error);
+        }
     };
 
+    const onEmployeeCreateSubmit = async(data) => {
+        try {
+            const newEmployee = await employeeService.create(data);
+
+            setEmployees(state => [...state, newEmployee]);
+
+            navigate('/employees');
+        } catch (error) {
+            console.log('Error onEmployeeCreateSubmit:' + error);
+        }
+    };
+    
     const context = {
         onLoginSubmit,
         onRegisterSubmit,
@@ -116,7 +132,7 @@ function App() {
                         <Route path="/auth/logout" element={<Logout />} /> 
 
                         <Route path="/employees" element={<Employees employees={employees}/>} />
-                        <Route path="/employees/create" element={<CreateEmployee />} />
+                        <Route path="/employees/create" element={<CreateEmployee onEmployeeCreateSubmit={onEmployeeCreateSubmit}/>} />
                         <Route path="/employees/:employeeId/edit" element={<EditEmployee />} />
                         {/* <Route path="/employees/:employeeId/delete" element={<DeleteEmployee />} /> */}
                         <Route path="/employees/:employeeId/tasks" element={<EmployeeTasks />} />
