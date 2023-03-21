@@ -1,24 +1,36 @@
 import { useState } from "react";
-
+import useForm from "../../hooks/useForm";
+import { useContext } from "react";
+import { authContext } from "../../contexts/autContext";
 const CreateTask = ({
-    onTaskCreateSubmit,
+    onTaskCreateSubmit
 }) => {
-    const [values, setValues] = useState({
-        title: '',
-        description: '',
-        dueDate: '',
-        status: 'open',
-        assignee: ''
-    });
+    // const [values, setValues] = useState({
+    //     title: '',
+    //     description: '',
+    //     dueDate: '',
+    //     status: 'open',
+    //     assignee: ''
+    // });
 
-    const onChangeHandler = (e) => {
-        setValues(state => ({ ...state, [e.target.name]: e.target.value }))
-    };
+    // const onChangeHandler = (e) => {
+    //     setValues(state => ({ ...state, [e.target.name]: e.target.value }))
+    // };
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        onTaskCreateSubmit(values);
-    };
+    // const onSubmit = (e) => {
+    //     e.preventDefault();
+    //     onTaskCreateSubmit(values);
+    // };
+    const { token } = useContext(authContext);
+
+    const {values, onChangeHandler, onSubmit} = useForm({
+            title: '',
+            description: '',
+            dueDate: '',
+            status: 'open',
+            assignee: '',
+        }, onTaskCreateSubmit);
+
     return(
         <form onSubmit={onSubmit}>
             <h2>Create Task</h2>
