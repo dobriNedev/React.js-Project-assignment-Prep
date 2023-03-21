@@ -1,7 +1,19 @@
-import * as request from '../utils/requester';
+import {requestFactory} from '../utils/requester';
 
 const baseUrl = 'http://localhost:3030/users';
 
-export const register = (data) => request.post(`${baseUrl}/register`, data)
-export const login = (data) => request.post(`${baseUrl}/login`, data);
-export const logout = (token) => request.get(`${baseUrl}/logout`, token);
+export const authServiceFactory = (token) => {
+    const request = requestFactory(token);
+
+    const register = (data) => request.post(`${baseUrl}/register`, data)
+    const login = (data) => request.post(`${baseUrl}/login`, data);
+    const logout = () => request.get(token, `${baseUrl}/logout`);
+
+    return {
+        register,
+        login,
+        logout
+    }
+};
+
+

@@ -1,30 +1,44 @@
-import * as request from '../utils/requester';
+import { requestFactory } from '../utils/requester';
 
-const baseUrl = 'http://localhost:3030/jsonstore/tasks';
+const baseUrl = 'http://localhost:3030/data/tasks';
 
-export const getAll = async () => {
-    const result = await request.get(baseUrl);
-    const tasks = Object.values(result);
+export const taskServiceFactory = (token) => {
 
-    return tasks;
-};
+    const request = requestFactory(token);
 
-export const getOne = async (taskId) => {
-    const result = await request.get(`${baseUrl}/${taskId}`);
+    const getAll = async () => {
+        const result = await request.get(baseUrl);
+        const tasks = Object.values(result);
+    
+        return tasks;
+    };
+    
+    const getOne = async (taskId) => {
+        const result = await request.get(`${baseUrl}/${taskId}`);
+    
+        return result;
+    };
+    
+    const create = async (taskData) => {
+        const result = await request.post(baseUrl, taskData);
+    
+        console.log(result);
+    
+        return result;
+    };
+    
+    const remove = async(taskId) => {
+        const result = await request.remove(`${baseUrl}/${taskId}`);
+    
+        return result;
+    }
 
-    return result;
-};
-
-export const create = async (taskData) => {
-    const result = await request.post(baseUrl, taskData);
-
-    console.log(result);
-
-    return result;
-};
-
-export const remove = async(taskId) => {
-    const result = await request.remove(`${baseUrl}/${taskId}`);
-
-    return result;
+    return {
+        getAll,
+        getOne,
+        create,
+        delete: remove
+    }
 }
+
+
