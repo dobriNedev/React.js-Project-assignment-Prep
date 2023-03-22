@@ -11,7 +11,7 @@ const TaskRow = ({
     assignee,
     dueDate,
     status,
-    _ownerId,
+    _ownerId
 }) => {
     const navigate = useNavigate();
 

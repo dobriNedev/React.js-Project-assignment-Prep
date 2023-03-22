@@ -4,7 +4,6 @@ import { employeeServiceFactory } from './services/empolyeeService';
 import { taskServiceFactory } from './services/taskService';
 import { authServiceFactory } from './services/authService';
 import { authContext } from "./contexts/autContext";
-import { useService } from "./hooks/useService";
 
 import Header from "./components/Header/Header";
 import Navbar from './components/Navbar/Navbar';
@@ -123,6 +122,14 @@ function App() {
 
         navigate('/tasks');
     };
+
+    const onAssignTaskSubmit = async(values) => {
+        const result = await taskService.edit(values._id, values);
+
+        setTasks(state => state.map(t => t._id === values._id ? result : t));
+
+        navigate('/tasks');
+    }
     
     const context = {
         onLoginSubmit,
@@ -147,17 +154,17 @@ function App() {
                         <Route path="/auth/login" element={<Login />} />
                         <Route path="/auth/logout" element={<Logout />} /> 
 
-                        <Route path="/employees" element={<Employees employees={employees}/>} />
+                        <Route path="/employees" element={<Employees employees={employees} tasks={tasks}/>} />
                         <Route path="/employees/create" element={<CreateEmployee onEmployeeCreateSubmit={onEmployeeCreateSubmit}/>} />
                         <Route path="/employees/:employeeId/edit" element={<EditEmployee onEditEmployeeSubmit={onEditEmployeeSubmit}/>} />
                         {/* <Route path="/employees/:employeeId/delete" element={<DeleteEmployee />} /> */}
                         <Route path="/employees/:employeeId/tasks" element={<EmployeeTasks />} />
 
-                        <Route path="/tasks" element={<Tasks tasks={tasks}/>} />
+                        <Route path="/tasks" element={<Tasks tasks={tasks} />} />
                         <Route path="/tasks/create" element={<CreateTask onTaskCreateSubmit={onTaskCreateSubmit}/>} />
                         <Route path="/tasks/:taskId/edit" element={<EditTask onTaskEditSubmit={onTaskEditSubmit}/>} />
                         {/* <Route path="/tasks/:taskId/delete" element={<DeleteTask />} /> */}
-                        <Route path="/tasks/:taskId/assign" element={<AssignTask />} />
+                        <Route path="/tasks/:taskId/assign" element={<AssignTask employees={employees} onAssignTaskSubmit={onAssignTaskSubmit}/>} />
 
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>

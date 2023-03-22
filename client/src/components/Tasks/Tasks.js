@@ -22,7 +22,7 @@ const Tasks = ({
                 </tr>
             </thead>
             <tbody>
-                {tasks.map(t => <TaskRow key={t._id} {...t}/>)}
+                {tasks.map(t => <TaskRow key={t._id} {...t} />)}
             </tbody>
         </table>
         )}
