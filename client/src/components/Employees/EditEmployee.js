@@ -96,7 +96,7 @@ const EditEmployee = ({
 				/>
 		    <br></br>
 		    <label forhtml="role">Role:</label>
-		    <select name="role">
+		    <select name="role" onChange={onChangeHandler}>
                 <option value="intern" >Intern</option>
 			    <option value="junior" >Junior</option>
 			    <option value="regular" >Regular</option>
