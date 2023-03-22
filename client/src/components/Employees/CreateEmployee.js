@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import useForm from "../../hooks/useForm";
 
@@ -103,13 +104,15 @@ const CreateEmployee = ({
             <br></br>
             <label for="role">Role:</label>
             <select value={values.role} onChange={onChangeHandler} name="role">
-                <option value="intern" >Intern</option>
-			    <option value="junior" >Junior</option>
-			    <option value="regular" >Regular</option>
-                <option value="senior" >Senior</option>
+                <option value="intern">Intern</option>
+			    <option value="junior">Junior</option>
+			    <option value="regular">Regular</option>
+                <option value="senior">Senior</option>
 		    </select>
             <br></br>
             <button type="submit">Create</button>
+           <br></br>
+            <Link className="action-edit" to={'/employees'}>Back</Link>
         </form>
     );
 };

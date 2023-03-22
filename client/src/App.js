@@ -107,6 +107,14 @@ function App() {
             console.log('Error onEmployeeCreateSubmit:' + error);
         }
     };
+
+    const onEditEmployeeSubmit = async(values) => {
+        const result = await employeeService.edit(values._id, values);
+
+        setEmployees(state => state.map(e => e._id === values._id ? result : e));
+
+        navigate('/employees');
+    };
     
     const context = {
         onLoginSubmit,
@@ -133,7 +141,7 @@ function App() {
 
                         <Route path="/employees" element={<Employees employees={employees}/>} />
                         <Route path="/employees/create" element={<CreateEmployee onEmployeeCreateSubmit={onEmployeeCreateSubmit}/>} />
-                        <Route path="/employees/:employeeId/edit" element={<EditEmployee />} />
+                        <Route path="/employees/:employeeId/edit" element={<EditEmployee onEditEmployeeSubmit={onEditEmployeeSubmit}/>} />
                         {/* <Route path="/employees/:employeeId/delete" element={<DeleteEmployee />} /> */}
                         <Route path="/employees/:employeeId/tasks" element={<EmployeeTasks />} />
 

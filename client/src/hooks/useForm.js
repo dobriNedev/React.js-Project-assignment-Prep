@@ -1,10 +1,16 @@
 import { useState} from "react";
 
+
 const useForm = (initialFormValues, onSubmitHandler) => {
     const [values, setValues] = useState(initialFormValues);
 
     const onChangeHandler = (e) => {
-        setValues(state => ({...state, [e.target.name]: e.target.value}));
+        if (e.target.name === 'role') {
+            setValues(state => ({...state, role: e.target.value}))
+        } else {
+            setValues(state => ({...state, [e.target.name]: e.target.value}));
+        }
+        
     };
 
     const onSubmit = (e) => {
@@ -12,10 +18,16 @@ const useForm = (initialFormValues, onSubmitHandler) => {
         onSubmitHandler(values);
     };
 
+    const onValuesChange = async(newValues) => {
+        
+        setValues(newValues);
+    };
+
     return {
         values,
         onChangeHandler,
-        onSubmit
+        onSubmit,
+        onValuesChange
     }
 };
 

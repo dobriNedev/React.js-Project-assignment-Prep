@@ -25,6 +25,12 @@ export const employeeServiceFactory = (token) => {
     
         return result;
     };
+
+    const edit = async(employeeId, data) => {
+        const result = await request.put(`${baseUrl}/${employeeId}`, data);
+
+        return result;
+    };
     
     const remove = async(employeeId) => {
         const result = await request.delete(`${baseUrl}/${employeeId}`);
@@ -36,6 +42,7 @@ export const employeeServiceFactory = (token) => {
         getAll,
         getOne,
         create,
+        edit,
         delete: remove
     }
 }
