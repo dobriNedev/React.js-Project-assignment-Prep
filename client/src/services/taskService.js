@@ -26,6 +26,12 @@ export const taskServiceFactory = (token) => {
     
         return result;
     };
+
+    const edit = async(taskId, data) => {
+        const result = await request.put(`${baseUrl}/${taskId}`, {...data});
+
+        return result;
+    }
     
     const remove = async(taskId) => {
         const result = await request.delete(`${baseUrl}/${taskId}`);
@@ -37,6 +43,7 @@ export const taskServiceFactory = (token) => {
         getAll,
         getOne,
         create,
+        edit,
         delete: remove
     }
 }

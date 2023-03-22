@@ -115,6 +115,14 @@ function App() {
 
         navigate('/employees');
     };
+
+    const onTaskEditSubmit = async(values) => {
+        const result = await taskService.edit(values._id, values);
+
+        setTasks(state => state.map(t => t._id === values._id ? result : t));
+
+        navigate('/tasks');
+    };
     
     const context = {
         onLoginSubmit,
@@ -147,7 +155,7 @@ function App() {
 
                         <Route path="/tasks" element={<Tasks tasks={tasks}/>} />
                         <Route path="/tasks/create" element={<CreateTask onTaskCreateSubmit={onTaskCreateSubmit}/>} />
-                        <Route path="/tasks/:taskId/edit" element={<EditTask />} />
+                        <Route path="/tasks/:taskId/edit" element={<EditTask onTaskEditSubmit={onTaskEditSubmit}/>} />
                         {/* <Route path="/tasks/:taskId/delete" element={<DeleteTask />} /> */}
                         <Route path="/tasks/:taskId/assign" element={<AssignTask />} />
 
