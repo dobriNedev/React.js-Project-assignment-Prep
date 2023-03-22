@@ -27,7 +27,7 @@ export const employeeServiceFactory = (token) => {
     };
     
     const remove = async(employeeId) => {
-        const result = await request.remove(`${baseUrl}/${employeeId}`);
+        const result = await request.delete(`${baseUrl}/${employeeId}`);
     
         return result;
     }
