@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "../../contexts/autContext";
+import { useService } from "../../hooks/useService";
+import { taskServiceFactory } from "../../services/taskService";
 
 const TaskRow = ({
     _id,
@@ -9,11 +11,23 @@ const TaskRow = ({
     assignee,
     dueDate,
     status,
-    _ownerId
+    _ownerId,
 }) => {
+    const navigate = useNavigate();
+
     const { userId } = useContext(authContext);
 
     const isOwner = _ownerId === userId;
+
+    const taskService = useService(taskServiceFactory);
+
+    const onDeleteClick = async() => {
+        await taskService.delete(_id);
+
+        //TODO: change tasks state
+
+        navigate('/tasks');
+    }
 
     return (
         <tr>
@@ -36,7 +50,9 @@ const TaskRow = ({
             {isOwner && (
                 <td>
                     <Link className="action-edit" to={`/tasks/${_id}/edit`}>Edit</Link>
-                    <Link className="action-delete" to={`/tasks/${_id}/delete`}>Delete</Link>
+                    {/* <Link className="action-delete" to={`/tasks/${_id}/delete`} onClick={onDeleteClick}>Delete</Link> */}
+                    
+                    <button  onClick={onDeleteClick}>Delete</button>
                 </td>
             )}
             <td>

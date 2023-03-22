@@ -28,7 +28,7 @@ export const taskServiceFactory = (token) => {
     };
     
     const remove = async(taskId) => {
-        const result = await request.remove(`${baseUrl}/${taskId}`);
+        const result = await request.delete(`${baseUrl}/${taskId}`);
     
         return result;
     }
