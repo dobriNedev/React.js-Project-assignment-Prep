@@ -13,7 +13,6 @@ const AssignTask = ({
     const taskService = useService(taskServiceFactory);
     const {values, onSubmit, onChangeHandler, onValuesChange } = useForm({
         assignee: '',
-        status: 'ongoing'
     }, onAssignTaskSubmit);
 
     useEffect(() => {

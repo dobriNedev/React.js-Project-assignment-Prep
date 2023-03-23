@@ -22,8 +22,6 @@ export const taskServiceFactory = (token) => {
     const create = async (taskData) => {
         const result = await request.post(baseUrl, taskData);
     
-        console.log(result);
-    
         return result;
     };
 

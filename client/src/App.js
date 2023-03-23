@@ -138,6 +138,7 @@ function App() {
         userId: auth._id,
         token: auth.accessToken,
         userEmail: auth.email,
+        name: auth.firstName,
         isAuthenticated: !!auth.accessToken
     };
 
