@@ -21,11 +21,13 @@ const Navbar = () => {
                 {isAuthenticated 
                     ? 
                     <div className='logged'>                   
-                        <li>Hello {name}</li>           
+                        <li>Hello</li>
+                        <li>{name}!</li>       
                         <li><Link to="/auth/logout">Logout</Link></li>
                     </div>
                     : 
                     <div className='not-logged'> 
+                        <li>Hello guest!</li>
                         <li><Link to="/auth/login">Login</Link></li>
                         <li><Link to="/auth/register">Register</Link></li>
                     </div>

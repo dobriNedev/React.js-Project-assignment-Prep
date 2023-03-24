@@ -1,9 +1,12 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+
 import { employeeServiceFactory } from './services/empolyeeService';
 import { taskServiceFactory } from './services/taskService';
-import { authServiceFactory } from './services/authService';
 import { authContext } from "./contexts/autContext";
+import { authServiceFactory } from './services/authService'
+//import { taskMessageServiceFactory } from "./services/taskMessageService";
+//import { AuthProvider } from "./contexts/autContext";
 
 import Header from "./components/Header/Header";
 import Navbar from './components/Navbar/Navbar';
@@ -21,15 +24,19 @@ import CreateTask from './components/Tasks/CreateTask';
 import EditTask from './components/Tasks/EditTask';
 import Tasks from './components/Tasks/Tasks';
 import PageNotFound from './components/PageNotFound/PageNotFound';
+//import TaskMessage from "./components/Tasks/TaskMessage";
 
 
 function App() {
     const navigate = useNavigate();
+    const [auth, setAuth] = useState({});
     const [employees, setEmployees] = useState([]);
     const [tasks, setTasks] = useState([]);
-    const [auth, setAuth] = useState({});
-    const taskService = taskServiceFactory(auth.accessToken);
+    //const [taksMessages, setTaskMessages] = useState([]);
+   
     const authService = authServiceFactory(auth.accessToken);
+    const taskService = taskServiceFactory(auth.accessToken); //
+    //const taskMessageService = taskMessageServiceFactory(auth.accessToken); 
     const employeeService = employeeServiceFactory(auth.accessToken);
 
     useEffect(()=> {
@@ -45,7 +52,6 @@ function App() {
             setEmployees(result);
         })
     }, []);
-
     const onLoginSubmit = async(data) => {
         try {
             const result = await authService.login(data);
@@ -82,6 +88,18 @@ function App() {
             console.log('Error on logout:' + error);
         }
     };
+        
+    const contextValues = {
+        onLoginSubmit,
+        onRegisterSubmit,
+        onLogout,
+        userId: auth._id,
+        token: auth.accessToken,
+        userEmail: auth.email,
+        name: auth.firstName,
+        isAuthenticated: !!auth.accessToken
+    };
+
 
     const onTaskCreateSubmit = async(data) => {
         try {
@@ -129,21 +147,22 @@ function App() {
         setTasks(state => state.map(t => t._id === values._id ? result : t));
 
         navigate('/tasks');
-    }
-    
-    const context = {
-        onLoginSubmit,
-        onRegisterSubmit,
-        onLogout,
-        userId: auth._id,
-        token: auth.accessToken,
-        userEmail: auth.email,
-        name: auth.firstName,
-        isAuthenticated: !!auth.accessToken
     };
 
+    // const onTaskMessageSubmit = async(values) => {
+    //     try {
+    //         const result = await taskMessageService.create(values);
+
+    //         navigate('/tasks');
+    //     } catch (error) {
+            
+    //     }
+    //     console.log(values);
+        
+    // };
+
     return (
-        <authContext.Provider value={context} >
+        <authContext.Provider value={contextValues}>
         <div className="App">
             <Header />
             <Navbar />
@@ -166,6 +185,7 @@ function App() {
                         <Route path="/tasks/:taskId/edit" element={<EditTask onTaskEditSubmit={onTaskEditSubmit}/>} />
                         {/* <Route path="/tasks/:taskId/delete" element={<DeleteTask />} /> */}
                         <Route path="/tasks/:taskId/assign" element={<AssignTask employees={employees} onAssignTaskSubmit={onAssignTaskSubmit}/>} />
+                        {/* <Route path="/tasks/:taskId/message" element={<TaskMessage onTaskMessageSubmit={onTaskMessageSubmit}/>} /> */}
 
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
