@@ -1,30 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { employeeContex } from "../../contexts/employeeContext";
 
 import useForm from "../../hooks/useForm";
 
-const CreateEmployee = ({
-    onEmployeeCreateSubmit,
-}) => {
-    // const [values, setValues] = useState({
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     phoneNumber: "",
-    //     birthDate: "",
-    //     salary: "",
-    //     role: ""
-    // });
-
-    // const onChangeHandler = (e) => {
-    //     setValues(state => ({ ...state, [e.target.name]: e.target.value }));
-    // };
-
-    // const onSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     onEmployeeCreateSubmit(values);
-    // }
+const CreateEmployee = () => {
+   const { onEmployeeCreateSubmit } = useContext(employeeContex);
 
     const { values, onChangeHandler, onSubmit } = useForm({
             firstName: "",

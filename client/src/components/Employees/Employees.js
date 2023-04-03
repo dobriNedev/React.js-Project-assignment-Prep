@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { employeeContex } from '../../contexts/employeeContext';
 import EmployeeRow from './EmployeeRow';
 
 
-const Employees = ({
-    employees,
-}) => {
+const Employees = () => {
+    const { employees } = useContext(employeeContex);
     return(
         <section className="list">
         <h2 className="section-title">Employees</h2>

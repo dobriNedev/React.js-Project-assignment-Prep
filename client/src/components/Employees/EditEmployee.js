@@ -1,14 +1,12 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { employeeContex } from "../../contexts/employeeContext";
 import useForm from "../../hooks/useForm";
 import { useService } from "../../hooks/useService";
 import { employeeServiceFactory } from "../../services/empolyeeService";
 
-
-
-const EditEmployee = ({
-	onEditEmployeeSubmit
-}) => {
+const EditEmployee = () => {
+	const { onEditEmployeeSubmit } = useContext(employeeContex);
 	const { employeeId } = useParams();
 	const employeeService = useService(employeeServiceFactory);
 	const { values, onChangeHandler, onSubmit, onValuesChange } = useForm({
