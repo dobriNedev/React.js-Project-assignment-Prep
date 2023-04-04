@@ -21,7 +21,7 @@ const CreateEmployee = () => {
         <form onSubmit={onSubmit} method="POST">
             <h2>Create Employee</h2>
             <br></br>
-            <label for="firstName">First name:</label>
+            <label htmlFor="firstName">First name:</label>
             <input 
                 value={values.firstName} 
                 onChange={onChangeHandler} 
@@ -31,7 +31,7 @@ const CreateEmployee = () => {
                 required 
                 />
             <br></br>
-            <label for="lastName">Last name:</label>
+            <label htmlFor="lastName">Last name:</label>
             <input 
                 value={values.lastName} 
                 onChange={onChangeHandler} 
@@ -41,7 +41,7 @@ const CreateEmployee = () => {
                 required 
                 />
             <br></br>
-            <label for="email">Email:</label>
+            <label htmlFor="email">Email:</label>
             <input 
                 value={values.email} 
                 onChange={onChangeHandler} 
@@ -51,7 +51,7 @@ const CreateEmployee = () => {
                 required 
                 />
             <br></br>
-            <label for="phoneNumber">Phone:</label>
+            <label htmlFor="phoneNumber">Phone:</label>
             <input 
                 value={values.phoneNumber} 
                 onChange={onChangeHandler} 
@@ -61,7 +61,7 @@ const CreateEmployee = () => {
                 required 
                 />
             <br></br>
-            <label for="birthDate">Date of Birth:</label>
+            <label htmlFor="birthDate">Date of Birth:</label>
             <input 
                 value={values.birthDate} 
                 onChange={onChangeHandler} 
@@ -71,7 +71,7 @@ const CreateEmployee = () => {
                 required 
                 />
             <br></br>
-            <label for="salary">Monthly Salary in BGN:</label>
+            <label htmlFor="salary">Monthly Salary in BGN:</label>
             <input 
                 value={values.salary} 
                 onChange={onChangeHandler} 
@@ -83,7 +83,7 @@ const CreateEmployee = () => {
                 max="10000" 
                 />
             <br></br>
-            <label for="role">Role:</label>
+            <label htmlFor="role">Role:</label>
             <select value={values.role} onChange={onChangeHandler} name="role">
                 <option value="intern">Intern</option>
 			    <option value="junior">Junior</option>
