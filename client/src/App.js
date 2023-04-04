@@ -5,7 +5,7 @@ import { TaskProvider } from "./contexts/taskContext";
 import Header from "./components/Header/Header";
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import { Router } from "./components/Router/Router";
+import { Routing } from "./components/Routing/Routing";
 
 function App() {
     return (
@@ -16,7 +16,7 @@ function App() {
                 <main className="main">
                     <EmployeeProvider>
                         <TaskProvider>
-                           <Router />
+                           <Routing />
                         </TaskProvider>
                     </EmployeeProvider>
                 </main>
