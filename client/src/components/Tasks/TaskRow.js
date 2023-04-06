@@ -3,63 +3,35 @@ import { useContext } from "react";
 import { authContext } from "../../contexts/autContext";
 import { useService } from "../../hooks/useService";
 import { taskServiceFactory } from "../../services/taskService";
+import TaskDetails from "./TaskDetails";
 
-const TaskRow = ({
-    _id,
-    title,
-    description,
-    assignee,
-    dueDate,
-    status,
-    _ownerId
-}) => {
-    const navigate = useNavigate();
+const TaskRow = (task) => {
+  // const navigate = useNavigate();
 
-    const { userId } = useContext(authContext);
+  // const { userId } = useContext(authContext);
 
-    const isOwner = _ownerId === userId;
+  // const isOwner = _ownerId === userId;
 
-    const taskService = useService(taskServiceFactory);
+  // const taskService = useService(taskServiceFactory);
 
-    const onDeleteClick = async() => {
-        await taskService.delete(_id);
+  // const onDeleteClick = async() => {
+  //     await taskService.delete(_id);
 
-        //TODO: change tasks state
+  //     //TODO: change tasks state
 
-        navigate('/tasks');
-    }
+  //     navigate('/tasks');
+  // }
 
-    return (
-        <tr>
-            <td>{title}</td>
-            <td>{description}</td>
-            <td>
-                {/* {{#each this.assignee}}
-    {{this.firstName}} {{this.lastName}}
-    {{#unless @last}}, {{/unless}}
-  {{/each}} */}
-                {assignee}
-            </td>
-            <td>{dueDate}</td>
-            <td>{status}</td>
-
-            {/* {{#if (eq this.status 'closed')}}
-    {{else}}
-      {{#if (eq this.status 'open')}} */}
-            {/* TODO: add check for status too - only opened tasks can be deleted or/and edited */}
-            {isOwner && (
-                <td>
-                    <Link className="action-edit" to={`/tasks/${_id}/edit`}>Edit</Link>
-                    {/* <Link className="action-delete" to={`/tasks/${_id}/delete`} onClick={onDeleteClick}>Delete</Link> */}
-                    
-                    <button  onClick={onDeleteClick}>Delete</button>
-                </td>
-            )}
-            <td>
-                <Link className="action-assign" to={`/tasks/${_id}/assign`}>Assign</Link>
-            </td>
-        </tr>
-    );
+  return (
+    <tr>
+      <td>{task.title}</td>
+      <td>{task.dueDate}</td>
+      <td>{task.status}</td>
+      <td>
+        <TaskDetails {...task} />
+      </td>
+    </tr>
+  );
 };
 
 export default TaskRow;
