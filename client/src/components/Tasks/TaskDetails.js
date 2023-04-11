@@ -1,10 +1,19 @@
 import { useState, useContext } from "react";
+import { LinkContainer } from "react-router-bootstrap";
+
 import { authContext } from "../../contexts/autContext";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-const TaskDetails = ({ title, description, dueDate, status, _ownerId }) => {
+const TaskDetails = ({
+  _id,
+  title,
+  description,
+  dueDate,
+  status,
+  _ownerId,
+}) => {
   const { isAuthenticated, userId } = useContext(authContext);
   const isOwner = _ownerId === userId;
   const [show, setShow] = useState(false);
@@ -46,9 +55,11 @@ const TaskDetails = ({ title, description, dueDate, status, _ownerId }) => {
           </Button>
           {isOwner ? (
             <>
-              <Button variant="primary" onClick={handleEdit}>
-                Edit
-              </Button>
+              <LinkContainer to={`/tasks/${_id}/edit`}>
+                <Button variant="primary" onClick={handleEdit}>
+                  Edit
+                </Button>
+              </LinkContainer>
               <Button variant="danger" onClick={handelDelete}>
                 Delete
               </Button>
