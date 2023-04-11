@@ -1,10 +1,12 @@
 import { useState, useContext } from "react";
+import { LinkContainer } from "react-router-bootstrap";
 import { authContext } from "../../contexts/autContext";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const EmployeeDetails = ({
+  _id,
   firstName,
   lastName,
   email,
@@ -56,9 +58,11 @@ const EmployeeDetails = ({
           </Button>
           {isOwner ? (
             <>
-              <Button variant="primary" onClick={handleEdit}>
-                Edit
-              </Button>
+              <LinkContainer to={`/employees/${_id}/edit`}>
+                <Button variant="primary" onClick={handleEdit}>
+                  Edit
+                </Button>
+              </LinkContainer>
               <Button variant="danger" onClick={handelDelete}>
                 Delete
               </Button>
