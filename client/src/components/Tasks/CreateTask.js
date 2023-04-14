@@ -27,7 +27,6 @@ const CreateTask = () => {
       description: "",
       dueDate: "",
       status: "open",
-      assignee: "",
     },
     onTaskCreateSubmit
   );

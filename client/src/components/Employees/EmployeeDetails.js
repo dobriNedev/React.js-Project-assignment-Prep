@@ -30,6 +30,10 @@ const EmployeeDetails = ({
     console.log("Delete");
   };
 
+  const handleTasks = () => {
+    console.log("Handle Employee's tasks");
+  };
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -66,6 +70,11 @@ const EmployeeDetails = ({
               <Button variant="danger" onClick={handelDelete}>
                 Delete
               </Button>
+              <LinkContainer to={`/employees/${_id}/tasks`}>
+                <Button variant="success" onClick={handleTasks}>
+                  Tasks
+                </Button>
+              </LinkContainer>
             </>
           ) : isAuthenticated ? (
             <Button variant="primary">Comment</Button>
