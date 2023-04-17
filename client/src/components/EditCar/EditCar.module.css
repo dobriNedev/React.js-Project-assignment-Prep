@@ -1,0 +1,61 @@
+.editResource {
+  background-color: rgba(245, 245, 245, 0.5);
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 10vh;
+}
+  
+.editResource h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+  
+.editResource label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+  
+.editResource input,
+.editResource textarea {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+  
+.editResource input::placeholder,
+.editResource textarea::placeholder {
+  color: #ccc;
+}
+  
+.editResource button {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+  
+.editResource button:hover {
+  background-color: #fff;
+  color: #3498db;
+}
+  
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border: 1px solid #3498db;
+}
+  
+.btn {
+  margin-top: 10px;
+}
+  
