@@ -1,199 +1,57 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 
-import { employeeServiceFactory } from './services/empolyeeService';
-import { taskServiceFactory } from './services/taskService';
-import { authContext } from "./contexts/autContext";
-import { authServiceFactory } from './services/authService'
-//import { taskMessageServiceFactory } from "./services/taskMessageService";
-//import { AuthProvider } from "./contexts/autContext";
+import { AuthProviderComponent } from "./contexts/AuthContext";
+import { CarProvider } from "./contexts/CarContext";
 
-import Header from "./components/Header/Header";
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-import DashBoard from './components/Dashboard/Dashboard';
-import CreateEmployee from './components/Employees/CreateEmployee';
-import EditEmployee from './components/Employees/EditEmployee';
-import Employees from './components/Employees/Employees';
-import EmployeeTasks from './components/Employees/EmployeeTasks';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import Logout from "./components/Logout/Logout";
-import AssignTask from './components/Tasks/AssignTask';
-import CreateTask from './components/Tasks/CreateTask';
-import EditTask from './components/Tasks/EditTask';
-import Tasks from './components/Tasks/Tasks';
-import PageNotFound from './components/PageNotFound/PageNotFound';
-//import TaskMessage from "./components/Tasks/TaskMessage";
+import { CreateCar } from "./components/CreateCar/CreateCar";
+import { Footer } from "./components/Footer/Footer";
+import { Header } from "./components/Header/Header";
+import { Home } from "./components/Home/Home";
+import { Login } from "./components/Login/Login";
+import { Catalog } from "./components/Catalog/Catalog";
+import { Register } from "./components/Register/Register";
+import { CarDetails } from "./components/CarDetails/CarDetails";
+import { Logout } from "./components/Logout/Logout";
+import { EditCar } from "./components/EditCar/EditCar";
+import { RouteGuard } from "./common/RouteCuard";
+import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 
+import styles from "./App.module.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-    const navigate = useNavigate();
-    const [auth, setAuth] = useState({});
-    const [employees, setEmployees] = useState([]);
-    const [tasks, setTasks] = useState([]);
-    //const [taksMessages, setTaskMessages] = useState([]);
-   
-    const authService = authServiceFactory(auth.accessToken);
-    const taskService = taskServiceFactory(auth.accessToken); //
-    //const taskMessageService = taskMessageServiceFactory(auth.accessToken); 
-    const employeeService = employeeServiceFactory(auth.accessToken);
+  return (
+    <AuthProviderComponent>
+      <CarProvider>
+        <div className="allContent">
+          <Header />
+          <main className={styles.main}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/logout" element={<Logout />} />
 
-    useEffect(()=> {
-        taskService.getAll()
-        .then(result => {
-            setTasks(result);
-        })
-    }, []);
+              <Route element={<RouteGuard />}>
+                <Route path="/create" element={<CreateCar />} />
+              </Route>
 
-    useEffect(() => {
-        employeeService.getAll()
-        .then(result => {
-            setEmployees(result);
-        })
-    }, []);
-    const onLoginSubmit = async(data) => {
-        try {
-            const result = await authService.login(data);
-            setAuth(result);
-            navigate('/');
-        } catch (error) {
-            console.log('Error on login:' + error);
-        }
-    };
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/catalog/:carId" element={<CarDetails />} />
 
+              <Route element={<RouteGuard />}>
+                <Route path="/catalog/:carId/edit" element={<EditCar />} />
+              </Route>
 
-    const onRegisterSubmit = async(data) => {
-        const {rePass, ...restData} = data;
-
-        if (rePass !== restData.password) {
-            //TODO:add proper error handling
-            return
-        }
-
-        try {
-            const result = await authService.register(restData);
-            setAuth(result);
-            navigate('/');
-        } catch (error) {
-            console.log('Error on register:' + error);
-        }
-    }
-
-    const onLogout = async() => { 
-        try {
-            await authService.logout();
-            setAuth({});
-        } catch (error) {
-            console.log('Error on logout:' + error);
-        }
-    };
-        
-    const contextValues = {
-        onLoginSubmit,
-        onRegisterSubmit,
-        onLogout,
-        userId: auth._id,
-        token: auth.accessToken,
-        userEmail: auth.email,
-        name: auth.firstName,
-        isAuthenticated: !!auth.accessToken
-    };
-
-
-    const onTaskCreateSubmit = async(data) => {
-        try {
-            const newTask = await taskService.create(data);
-
-            setTasks(state => [...state, newTask]);
-
-            navigate('/tasks');
-        } catch (error) {
-            console.log('Error onTaskCreateSubmit:' + error);
-        }
-    };
-
-    const onEmployeeCreateSubmit = async(data) => {
-        try {
-            const newEmployee = await employeeService.create(data);
-
-            setEmployees(state => [...state, newEmployee]);
-
-            navigate('/employees');
-        } catch (error) {
-            console.log('Error onEmployeeCreateSubmit:' + error);
-        }
-    };
-
-    const onEditEmployeeSubmit = async(values) => {
-        const result = await employeeService.edit(values._id, values);
-
-        setEmployees(state => state.map(e => e._id === values._id ? result : e));
-
-        navigate('/employees');
-    };
-
-    const onTaskEditSubmit = async(values) => {
-        const result = await taskService.edit(values._id, values);
-
-        setTasks(state => state.map(t => t._id === values._id ? result : t));
-
-        navigate('/tasks');
-    };
-
-    const onAssignTaskSubmit = async(values) => {
-        const result = await taskService.edit(values._id, values);
-
-        setTasks(state => state.map(t => t._id === values._id ? result : t));
-
-        navigate('/tasks');
-    };
-
-    // const onTaskMessageSubmit = async(values) => {
-    //     try {
-    //         const result = await taskMessageService.create(values);
-
-    //         navigate('/tasks');
-    //     } catch (error) {
-            
-    //     }
-    //     console.log(values);
-        
-    // };
-
-    return (
-        <authContext.Provider value={contextValues}>
-        <div className="App">
-            <Header />
-            <Navbar />
-                <main className="main">
-                    <Routes>
-                        <Route path="/" element={<DashBoard />} />
-
-                        <Route path="/auth/register" element={<Register />} />
-                        <Route path="/auth/login" element={<Login />} />
-                        <Route path="/auth/logout" element={<Logout />} /> 
-
-                        <Route path="/employees" element={<Employees employees={employees} tasks={tasks}/>} />
-                        <Route path="/employees/create" element={<CreateEmployee onEmployeeCreateSubmit={onEmployeeCreateSubmit}/>} />
-                        <Route path="/employees/:employeeId/edit" element={<EditEmployee onEditEmployeeSubmit={onEditEmployeeSubmit}/>} />
-                        {/* <Route path="/employees/:employeeId/delete" element={<DeleteEmployee />} /> */}
-                        <Route path="/employees/:employeeId/tasks" element={<EmployeeTasks />} />
-
-                        <Route path="/tasks" element={<Tasks tasks={tasks} />} />
-                        <Route path="/tasks/create" element={<CreateTask onTaskCreateSubmit={onTaskCreateSubmit}/>} />
-                        <Route path="/tasks/:taskId/edit" element={<EditTask onTaskEditSubmit={onTaskEditSubmit}/>} />
-                        {/* <Route path="/tasks/:taskId/delete" element={<DeleteTask />} /> */}
-                        <Route path="/tasks/:taskId/assign" element={<AssignTask employees={employees} onAssignTaskSubmit={onAssignTaskSubmit}/>} />
-                        {/* <Route path="/tasks/:taskId/message" element={<TaskMessage onTaskMessageSubmit={onTaskMessageSubmit}/>} /> */}
-
-                        <Route path="*" element={<PageNotFound />} />
-                    </Routes>
-                </main>
-            <Footer /> 
+              <Route path="/404" element={<PageNotFound />}></Route>
+              <Route path="*" element={<PageNotFound />}></Route>
+            </Routes>
+          </main>
+          <Footer />
         </div>
-        </authContext.Provider>
-    );
+      </CarProvider>
+    </AuthProviderComponent>
+  );
 }
 
 export default App;

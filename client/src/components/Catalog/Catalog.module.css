@@ -1,0 +1,25 @@
+.catalog {
+  padding: 20px;
+  min-height: 75vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+  
+.catalog h2 {
+  color:rgba(245, 245, 245, 0.875);
+  margin-top: 0;
+  width: 100%;
+  text-align: center;
+}
+  
+.no-cars {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.message-p {
+  font-size: 28px;
+  color:rgba(245, 245, 245, 0.875);
+}

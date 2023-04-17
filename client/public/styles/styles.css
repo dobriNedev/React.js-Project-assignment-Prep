@@ -23,18 +23,6 @@ header {
   
 }
 
-table {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: auto;
-}
-
-table,
-tr,
-td {
-  border: 3px solid  rgba(245, 245, 245, 0.875);
-  border-collapse: collapse;
-}
 
 .top-employees {
   display: flex;
@@ -49,7 +37,9 @@ td {
 
 .list {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 5rem;
+  width: 80%;
+  margin-left: 10%;
 }
 
 .errorContainer {

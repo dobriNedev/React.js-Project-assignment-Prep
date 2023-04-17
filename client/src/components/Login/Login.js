@@ -1,48 +1,74 @@
-import { Link } from "react-router-dom";
-import  useForm from '../../hooks/useForm';
-import { useContext } from "react";
-import { authContext } from "../../contexts/autContext";
+import styles from "./Login.module.css";
 
-const Login = () => {
+import { useState } from "react";
 
-    const { onLoginSubmit } = useContext(authContext);
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useForm } from "../../hooks/useForm";
+import { useValidation } from "../../hooks/useValidation";
 
-    const {values, onChangeHandler, onSubmit} = useForm({
-        email: '',
-        password: ''
-    }, onLoginSubmit);
+export const Login = () => {
+  const [hasError, setHasError] = useState(false);
 
-    return(
-        <form method="POST" onSubmit={onSubmit}>
-            <h2>Login to start managing tasks and employees</h2>
-            <br></br>
-            <label forhtml="email">Email:</label>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required
-                onChange={onChangeHandler}
-                value={values.email}
-                />
-            <br></br>
-            <label forhtml="password">Password:</label>
-            <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                required
-                onChange={onChangeHandler}
-                value={values.password}
-                />
-            <br></br>
-            <button type="submit">Login</button>
-            <div className="down-div">
-                <p>Don't have an account yet? Just <Link to="/auth/register">register</Link> please!</p>
+  const onErrorSubmit = () => {
+    setHasError(true);
+  };
+
+  const { onLoginSubmit } = useAuthContext();
+  const { values, changeHandler, onSubmit } = useForm(
+    {
+      email: "",
+      password: "",
+    },
+    (values) => {
+      onLoginSubmit(values, onErrorSubmit);
+    }
+  );
+
+  const { validateEmail, isValid, onBlurHandler } = useValidation();
+
+  return (
+    <section className={styles.login}>
+      <div className={styles.container}>
+        <form onSubmit={onSubmit}>
+          <h2>Login</h2>
+          {hasError && (
+            <div className={styles.loginError}>
+              Invalid username or password
             </div>
-       </form>
-      
-    );
-};
+          )}
+          {!isValid && (
+            <div className={styles.emailValidation}>Email is not valid</div>
+          )}
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={values.email}
+            onChange={(e) => {
+              changeHandler(e);
+              validateEmail(e.target.value);
+              setHasError(false);
+            }}
+            onBlur={(e) => onBlurHandler(e.target.value)}
+            required
+          />
 
-export default Login;
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={values.password}
+            onChange={(e) => {
+              changeHandler(e);
+              setHasError(false);
+            }}
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </section>
+  );
+};
