@@ -1,75 +1,85 @@
-import useForm from "../../hooks/useForm";
-import { authContext } from "../../contexts/autContext";
-import { useContext } from "react";
+import styles from "./Register.module.css";
 
-const Register = () => {
+import { useContext, useState } from "react";
+import { useForm } from "../../hooks/useForm";
+import { useValidation } from "../../hooks/useValidation";
+import { AuthContext } from "../../contexts/AuthContext";
 
-    const { onRegisterSubmit } = useContext(authContext);
+export const Register = () => {
+  const [hasError, setHasError] = useState(false);
 
-    const { values, onChangeHandler, onSubmit } = useForm({
-        firstName: '', 
-        lastName: '',
-        email: '',
-        password: '',
-        rePass: ''
-    }, onRegisterSubmit);
+  const onErrorSubmit = () => {
+    setHasError(true);
+  };
 
-    return(
+  const { onRegisterSubmit } = useContext(AuthContext);
+  const { values, changeHandler, onSubmit } = useForm(
+    {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    (values) => {
+      onRegisterSubmit(values, onErrorSubmit);
+    }
+  );
+
+  const { validateEmail, isValid, onBlurHandler } = useValidation();
+
+  return (
+    <section className={styles.register}>
+      <div className={styles.container}>
         <form method="POST" onSubmit={onSubmit}>
-            <h1>Register</h1>
-            <label forhtml="firstName">Firts name:</label>
-            <input 
-                type="text" 
-                id="firstName" 
-                name="firstName" 
-                required
-                onChange={onChangeHandler}
-                value={values.firstName}
-                />
-            <br></br>
-            <label forhtml="lastName">Last name:</label>
-            <input 
-                type="text" 
-                id="lastName" 
-                name="lastName" 
-                required
-                onChange={onChangeHandler}
-                value={values.lastName}
-                />
-            <br></br>
-            <label forhtml="email">Email:</label>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required
-                onChange={onChangeHandler}
-                value={values.email}
-                />
-            <br></br>
-            <label forhtml="password">Password:</label>
-            <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                required
-                onChange={onChangeHandler}
-                value={values.password}
-                />
-            <br></br>
-            <label forhtml="rePass">Confirm Password:</label>
-            <input 
-                type="password" 
-                id="rePass" 
-                name="rePass" 
-                required
-                onChange={onChangeHandler}
-                value={values.rePass}
-                />
-            <br></br>
-            <button type="submit">Register</button>
-        </form>
-    );
-};
+          <h2>Register</h2>
+          {hasError && (
+            <div className={styles.registerError}>Password mismatch</div>
+          )}
+          {!isValid && (
+            <div className={styles.emailValidation}>Email is not valid</div>
+          )}
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={values.email}
+            onChange={(e) => {
+              changeHandler(e);
+              validateEmail(e.target.value);
+            }}
+            onBlur={(e) => onBlurHandler(e.target.value)}
+          />
 
-export default Register;
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={values.password}
+            onChange={(e) => {
+              changeHandler(e);
+              setHasError(false);
+            }}
+            required
+          />
+
+          <label htmlFor="confirm-password">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirmPassword"
+            value={values.confirmPassword}
+            onChange={(e) => {
+              changeHandler(e);
+              setHasError(false);
+            }}
+            required
+          />
+
+          <button type="submit">Register</button>
+        </form>
+      </div>
+    </section>
+  );
+};
