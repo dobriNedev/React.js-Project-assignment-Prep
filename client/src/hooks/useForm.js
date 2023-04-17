@@ -1,39 +1,26 @@
-import { useState} from "react";
+import { useState } from "react";
 
+export const useForm = (initialValues, onSubmitHandler) => {
+  const [values, setValues] = useState(initialValues);
 
-const useForm = (initialFormValues, onSubmitHandler) => {
-    const [values, setValues] = useState(initialFormValues);
+  const changeHandler = (e) => {
+    setValues((state) => ({ ...state, [e.target.name]: e.target.value }));
+  };
 
-    const onChangeHandler = (e) => {
-        if (e.target.name === 'role') {
-            setValues(state => ({...state, role: e.target.value}))
-        } else if (e.target.name === 'assignee') {
-            const selectedOption = e.target.options[e.target.selectedIndex];
-            setValues((state) => ({
-            ...state,
-            assignee: selectedOption.value
-        }));
-        } else {
-            setValues(state => ({...state, [e.target.name]: e.target.value}));
-        }
-        
-    };
-    const onSubmit = (e) => {
-        e.preventDefault();
-        onSubmitHandler(values);
-    };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onSubmitHandler(values);
+    setValues(initialValues);
+  };
 
-    const onValuesChange = async(newValues) => {
-        
-        setValues(newValues);
-    };
+  const changeValues = (newValues) => {
+    setValues(newValues);
+  };
 
-    return {
-        values,
-        onChangeHandler,
-        onSubmit,
-        onValuesChange
-    }
+  return {
+    values,
+    changeHandler,
+    onSubmit,
+    changeValues,
+  };
 };
-
-export default useForm;
