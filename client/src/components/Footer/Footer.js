@@ -3,9 +3,8 @@ import styles from "./Footer.module.css";
 export const Footer = () => {
   return (
     <footer className={styles["footer"]}>
-      <p>All rights reserved &copy; Dobri Nedev - March, 2023</p>
       <p>
-        Click{" "}
+        All rights reserved &copy; Dobri Nedev - March, 2023. Click{" "}
         <a
           href="https://github.com/dobriNedev"
           target="_blank"

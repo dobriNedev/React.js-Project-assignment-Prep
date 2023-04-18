@@ -1,17 +1,16 @@
 .footer {
   margin-bottom: 1vh;
-  height: 5vh;
-  position: fixed;
+  height: 10%;
+  position:fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   background-color:  rgba(245, 245, 245, 0.875);
   color: #333;
   text-align: center;
-  padding: 15px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  font-size: small;
 }
 
 .footer a {
@@ -23,4 +22,15 @@
 .footer p {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footer p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
 }
