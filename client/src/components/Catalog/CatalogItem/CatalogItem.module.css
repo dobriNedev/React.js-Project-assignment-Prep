@@ -9,37 +9,45 @@
   }
   
   .card img {
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1rem;
     height: 200px;
     object-fit: cover;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 5px;
   }
   
   .details {
-    padding: 10px;
+    padding: 0.5rem;
   }
   
   .details h3 {
-    margin: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
   }
   
-  .type,
+  .model,
   .price,
   .location {
     margin: 5px 0;
     font-size: 0.9rem;
   }
   
-  .type::before {
+  .model::before {
     content: "Model: ";
   }
   
   .price::before {
-    content: "$ ";
+    content: "Price: ";
   }
+
+  .price::after {
+    content: " $";
+  }
+
   
   .location::before {
     content: "Location: ";

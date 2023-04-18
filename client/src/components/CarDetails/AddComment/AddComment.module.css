@@ -34,7 +34,6 @@ transition: all 0.3s ease;}
   background-color: #2980b9;
 }
   
-  
 @media screen and (min-width: 768px) {
   .comment-form {
     flex-direction: row;

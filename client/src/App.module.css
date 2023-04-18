@@ -5,4 +5,5 @@
 .main {
     background-image: url('https://media.istockphoto.com/id/175012291/photo/muscle-car.jpg?s=612x612&w=0&k=20&c=fXCJcPCSlASIZ7CBzkCdxrmj9pp666maMrzrzwIQWp8=');
     background-size: cover;
+    height: 80%;
 }
