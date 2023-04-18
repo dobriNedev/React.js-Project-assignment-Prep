@@ -32,18 +32,17 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/logout" element={<Logout />} />
 
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/catalog/:carId" element={<CarDetails />} />
+
               <Route element={<RouteGuard />}>
                 <Route path="/create" element={<CreateCar />} />
               </Route>
-
-              <Route path="/catalog" element={<Catalog />} />
-              <Route path="/catalog/:carId" element={<CarDetails />} />
 
               <Route element={<RouteGuard />}>
                 <Route path="/catalog/:carId/edit" element={<EditCar />} />
               </Route>
 
-              <Route path="/404" element={<PageNotFound />}></Route>
               <Route path="*" element={<PageNotFound />}></Route>
             </Routes>
           </main>
