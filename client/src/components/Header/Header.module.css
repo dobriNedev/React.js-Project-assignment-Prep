@@ -1,6 +1,7 @@
 
 header {
   background-color:  rgba(245, 245, 245, 0.875);
+  height: 10%;
 }
   
  
@@ -52,3 +53,4 @@ nav li a:hover {
     padding: 10px;
   }
 }
+
