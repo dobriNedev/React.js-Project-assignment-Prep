@@ -1,7 +1,8 @@
 import { useEffect, useReducer } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { carServiceFactory } from "../../services/carService";
+import { useCarContext } from "../../contexts/CarContext";
 import { useService } from "../../hooks/useService";
 import { useAuthContext } from "../../contexts/AuthContext";
 import * as commentService from "../../services/commentService";
@@ -14,8 +15,9 @@ import { DeleteModal } from "./DeleteModal/DeleteModal";
 import styles from "./CarDetails.module.css";
 
 export const CarDetails = () => {
+  const navigate = useNavigate();
   const carService = useService(carServiceFactory);
-
+  const { deleteCar } = useCarContext();
   const { userId, isAuthenticated, userEmail } = useAuthContext();
   const { carId } = useParams();
 
@@ -44,10 +46,13 @@ export const CarDetails = () => {
     });
   }, [carId]);
 
-  //TODO FIX isOwner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //const isOwner = carData.car._ownerId === userId;
-  const isOwner = true;
-  //TODO FIX isOwner!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const isOwner = carData.car._ownerId === userId;
+
+  const handelDelete = async () => {
+    await carService.delete(carData.car._id);
+    deleteCar(carData.car._id);
+    navigate("/catalog");
+  };
 
   const onCommentSubmit = async (values) => {
     const response = await commentService.create(carId, values.comment);
@@ -58,6 +63,7 @@ export const CarDetails = () => {
       userEmail,
     });
   };
+
   return (
     <div className={styles.details}>
       <h1>{carData.car.brand}</h1>
@@ -68,21 +74,15 @@ export const CarDetails = () => {
       <p>Description: {carData.car.description}</p>
 
       {isOwner && (
-        <div className={styles.buttons}>
+        <>
           <Button href={`/catalog/${carId}/edit`} variant="primary">
             Edit
           </Button>
-          {/* <Button variant="danger" onClick={onDeleteClick}>
-            Delete
-          </Button> */}
-          {/* <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
-            Delete
-          </Button> */}
-          <DeleteModal car={carData.car} />
+          <DeleteModal handelDelete={handelDelete} car={carData.car} />
           <Button href="/catalog" variant="secondary">
             Back
           </Button>
-        </div>
+        </>
       )}
 
       <h2>Comments</h2>

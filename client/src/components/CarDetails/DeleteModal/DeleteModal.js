@@ -1,24 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useService } from "../../../hooks/useService";
-import { carServiceFactory } from "../../../services/carService";
-import { useCarContext } from "../../../contexts/CarContext";
+
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export const DeleteModal = ({ car }) => {
-  const navigate = useNavigate();
-  const carService = useService(carServiceFactory);
-  const { deleteCar } = useCarContext();
+export const DeleteModal = ({ handelDelete, car }) => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   const onDeleteClick = async () => {
-    await carService.delete(car._id);
-    deleteCar(car._id);
-    navigate("/catalog");
+    handelDelete();
     handleClose();
   };
 
