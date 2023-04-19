@@ -18,6 +18,7 @@ export const AddComment = ({ onCommentSubmit }) => {
           placeholder="Comment......"
           value={values.comment}
           onChange={changeHandler}
+          required
         ></textarea>
       </label>
       <button type="submit">Submit</button>
