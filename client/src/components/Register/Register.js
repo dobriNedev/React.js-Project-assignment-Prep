@@ -28,58 +28,55 @@ export const Register = () => {
 
   return (
     <section className={styles.register}>
-      <div className={styles.container}>
-        <form method="POST" onSubmit={onSubmit}>
-          <h2>Register</h2>
-          {hasError && (
-            <div className={styles.registerError}>Password mismatch</div>
-          )}
-          {!isValid && (
-            <div className={styles.emailValidation}>Email is not valid</div>
-          )}
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={values.email}
-            onChange={(e) => {
-              changeHandler(e);
-              validateEmail(e.target.value);
-            }}
-            onBlur={(e) => onBlurHandler(e.target.value)}
-          />
+      <form method="POST" onSubmit={onSubmit}>
+        <h2>Register</h2>
+        {hasError && (
+          <div className={styles.registerError}>Password mismatch</div>
+        )}
+        {!isValid && (
+          <div className={styles.emailValidation}>Email is not valid</div>
+        )}
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          value={values.email}
+          onChange={(e) => {
+            changeHandler(e);
+            validateEmail(e.target.value);
+          }}
+          onBlur={(e) => onBlurHandler(e.target.value)}
+        />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={values.password}
-            onChange={(e) => {
-              changeHandler(e);
-              setHasError(false);
-            }}
-            required
-          />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={values.password}
+          onChange={(e) => {
+            changeHandler(e);
+            setHasError(false);
+          }}
+          required
+        />
 
-          <label htmlFor="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirm-password"
-            name="confirmPassword"
-            value={values.confirmPassword}
-            onChange={(e) => {
-              changeHandler(e);
-              setHasError(false);
-            }}
-            required
-          />
-
-          <button type="submit">Register</button>
-        </form>
-      </div>
+        <label htmlFor="confirm-password">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm-password"
+          name="confirmPassword"
+          value={values.confirmPassword}
+          onChange={(e) => {
+            changeHandler(e);
+            setHasError(false);
+          }}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
     </section>
   );
 };

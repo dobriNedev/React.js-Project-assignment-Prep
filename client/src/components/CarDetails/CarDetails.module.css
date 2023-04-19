@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 1rem;
   background-color: rgba(245, 245, 245, 0.5);
+  overflow: auto;
+  height: 500px;
 }
   
 h1 {
@@ -43,21 +45,3 @@ li {
   align-items: center;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-  
-label {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-  
-input[type="text"] {
-  font-size: 1.2rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-}

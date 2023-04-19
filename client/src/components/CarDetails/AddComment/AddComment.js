@@ -11,16 +11,15 @@ export const AddComment = ({ onCommentSubmit }) => {
 
   return (
     <form method="POST" onSubmit={onSubmit} className={styles["comment-form"]}>
-      <label>
-        Add a comment:
-        <textarea
-          name="comment"
-          placeholder="Comment......"
-          value={values.comment}
-          onChange={changeHandler}
-          required
-        ></textarea>
-      </label>
+      <label>Add a comment:</label>
+      <textarea
+        name="comment"
+        placeholder="Comment......"
+        value={values.comment}
+        onChange={changeHandler}
+        required
+      ></textarea>
+
       <button type="submit">Submit</button>
     </form>
   );
