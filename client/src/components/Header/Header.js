@@ -8,6 +8,8 @@ import styles from "./Header.module.css";
 export const Header = () => {
   const { isAuthenticated, userEmail } = useContext(AuthContext);
 
+  const user = userEmail?.substring(0, userEmail.indexOf("@"));
+
   return (
     <header className={styles.header}>
       <nav>
@@ -15,7 +17,7 @@ export const Header = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {isAuthenticated && <li>Welcome {userEmail}</li>}
+
           <li>
             <Link to="/catalog">Cars</Link>
           </li>
@@ -26,7 +28,7 @@ export const Header = () => {
                 <Link to="/create">Add Car</Link>
               </li>
               <li>
-                <Link to="/logout">Logout</Link>
+                <Link to="/logout">Logout {user}</Link>
               </li>
             </>
           )}
