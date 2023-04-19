@@ -2,12 +2,11 @@ import { useState } from "react";
 
 export const useLocalStorage = (key, initialValue) => {
   const [state, setState] = useState(() => {
-    //this is a synchronous operation
+    //!!synchronous operation!!
     const persistedStateSerialized = localStorage.getItem(key);
 
     if (persistedStateSerialized) {
       const persistedState = JSON.parse(persistedStateSerialized);
-      //return the new state with return persistedState
       return persistedState;
     }
     return initialValue;
